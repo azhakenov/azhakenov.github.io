@@ -13,4 +13,4 @@ Allow: /
 User-agent: *
 Allow: /
 
-Sitemap: https://abayzhakenov.com/sitemap.xml
+Sitemap: https://azhakenov.github.io/sitemap.xml

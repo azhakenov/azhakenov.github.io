@@ -12,5 +12,7 @@
 
 export const SITE = {
   base: import.meta.env.BASE_URL,
-  url: "https://abayzhakenov.com",
+  // Live on the user site. If a custom domain is added later, change this
+  // back to "https://abayzhakenov.com" and add public/CNAME.
+  url: "https://azhakenov.github.io",
 };
