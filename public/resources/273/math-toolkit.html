@@ -1,0 +1,902 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The 273 Math Toolkit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&display=swap">
+<style>
+:root{
+  --bg:#F2F5F7;
+  --surface:#FFFFFF;
+  --surface-2:#E9EEF2;
+  --ink:#12171D;
+  --ink-2:#39434F;
+  --muted:#616C79;
+  --rule:#D6DEE6;
+  --rule-soft:#E5EBF0;
+  --accent:#B21030;
+  --accent-ink:#8E0C26;
+  --accent-wash:#FBEDF0;
+  --note:#31507E;
+  --note-wash:#EDF1F8;
+  --shadow:0 1px 2px rgba(18,23,29,.05), 0 8px 24px -18px rgba(18,23,29,.35);
+  --serif:"Source Serif 4", Georgia, "Times New Roman", serif;
+  --sans:"IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  --mono:"IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0D1117;
+    --surface:#151B23;
+    --surface-2:#1D242D;
+    --ink:#E7ECF2;
+    --ink-2:#BFC9D4;
+    --muted:#8B97A5;
+    --rule:#28313B;
+    --rule-soft:#212932;
+    --accent:#FF6A80;
+    --accent-ink:#FF8A9C;
+    --accent-wash:#2A1620;
+    --note:#8FB3E8;
+    --note-wash:#161F2E;
+    --shadow:0 1px 2px rgba(0,0,0,.5), 0 10px 28px -20px rgba(0,0,0,.9);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0D1117;
+  --surface:#151B23;
+  --surface-2:#1D242D;
+  --ink:#E7ECF2;
+  --ink-2:#BFC9D4;
+  --muted:#8B97A5;
+  --rule:#28313B;
+  --rule-soft:#212932;
+  --accent:#FF6A80;
+  --accent-ink:#FF8A9C;
+  --accent-wash:#2A1620;
+  --note:#8FB3E8;
+  --note-wash:#161F2E;
+  --shadow:0 1px 2px rgba(0,0,0,.5), 0 10px 28px -20px rgba(0,0,0,.9);
+}
+
+*{box-sizing:border-box;}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:16px;
+  line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:var(--accent-ink);text-decoration-thickness:1px;text-underline-offset:2px;}
+a:focus-visible,summary:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px;}
+
+/* ---------- shell ---------- */
+.shell{max-width:1180px;margin:0 auto;padding:0 28px 96px;display:grid;grid-template-columns:232px minmax(0,1fr);gap:56px;align-items:start;}
+@media (max-width:960px){.shell{grid-template-columns:1fr;gap:0;padding:0 20px 72px;}}
+
+/* ---------- masthead ---------- */
+.masthead{grid-column:1/-1;padding:64px 0 40px;border-bottom:1px solid var(--rule);margin-bottom:44px;}
+.eyebrow{font-family:var(--mono);font-size:11.5px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:0 0 18px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;}
+.eyebrow .sep{color:var(--rule);}
+.eyebrow .plain{color:var(--muted);}
+h1{
+  font-family:var(--serif);font-weight:700;
+  font-size:clamp(38px,6.2vw,62px);line-height:1.02;letter-spacing:-.022em;
+  margin:0 0 20px;text-wrap:balance;max-width:16ch;
+}
+.standfirst{font-size:18px;line-height:1.6;color:var(--ink-2);max-width:62ch;margin:0;}
+.standfirst strong{font-weight:600;color:var(--ink);}
+.masthead-meta{display:flex;flex-wrap:wrap;gap:28px;margin-top:32px;padding-top:24px;border-top:1px solid var(--rule-soft);}
+.mm{display:flex;flex-direction:column;gap:3px;}
+.mm dt{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0;}
+.mm dd{margin:0;font-size:14.5px;font-weight:500;color:var(--ink);}
+
+/* ---------- sidebar ---------- */
+.rail{position:sticky;top:24px;font-size:13.5px;}
+@media (max-width:960px){.rail{position:static;margin-bottom:48px;}}
+.rail h2{font-family:var(--mono);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin:0 0 14px;font-weight:500;}
+.rail ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;}
+.rail a{
+  display:grid;grid-template-columns:26px 1fr;gap:8px;align-items:baseline;
+  padding:6px 0;color:var(--ink-2);text-decoration:none;line-height:1.35;
+  border-top:1px solid var(--rule-soft);
+}
+.rail li:first-child a{border-top:0;}
+.rail a .n{font-family:var(--mono);font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums;}
+.rail a:hover{color:var(--accent-ink);}
+.rail a:hover .n{color:var(--accent);}
+.rail a.here{color:var(--accent-ink);font-weight:600;}
+.rail a.here .n{color:var(--accent);}
+
+/* ---------- sections ---------- */
+section{scroll-margin-top:20px;margin:0 0 72px;}
+.sec-head{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:baseline;padding-bottom:14px;border-bottom:2px solid var(--ink);margin-bottom:26px;}
+.sec-n{font-family:var(--mono);font-size:12px;font-weight:600;letter-spacing:.06em;color:var(--accent);font-variant-numeric:tabular-nums;}
+h2.sec-t{font-family:var(--serif);font-weight:600;font-size:clamp(25px,3.4vw,33px);line-height:1.14;letter-spacing:-.014em;margin:0;text-wrap:balance;}
+h3{font-family:var(--sans);font-size:12px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);margin:34px 0 12px;}
+h4{font-family:var(--serif);font-size:19px;font-weight:600;margin:26px 0 8px;letter-spacing:-.005em;}
+p{margin:0 0 14px;max-width:66ch;}
+.lede{font-size:17px;color:var(--ink-2);max-width:64ch;}
+ul,ol.body{max-width:64ch;padding-left:20px;margin:0 0 14px;}
+li{margin-bottom:7px;}
+strong{font-weight:600;}
+em{font-style:italic;}
+code{font-family:var(--mono);font-size:.9em;background:var(--surface-2);padding:1px 5px;border-radius:3px;}
+
+/* ---------- math blocks ---------- */
+.eq{
+  background:var(--surface);border:1px solid var(--rule);border-left:3px solid var(--accent);
+  border-radius:0 4px 4px 0;padding:16px 20px;margin:0 0 16px;
+  overflow-x:auto;box-shadow:var(--shadow);
+}
+.eq.plain{border-left-color:var(--rule);}
+.eq .tag{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;}
+.eqrow{display:grid;gap:6px;}
+mjx-container{overflow-x:auto;overflow-y:hidden;max-width:100%;}
+mjx-container[display="true"]{margin:.55em 0 !important;}
+
+/* ---------- callouts ---------- */
+.why,.warn{
+  border-radius:4px;padding:16px 20px;margin:20px 0;max-width:70ch;font-size:15px;
+}
+.why{background:var(--note-wash);border:1px solid color-mix(in srgb, var(--note) 26%, transparent);}
+.warn{background:var(--accent-wash);border:1px solid color-mix(in srgb, var(--accent) 30%, transparent);}
+/* ---------- watch list ---------- */
+.watch{margin:20px 0;max-width:70ch;border:1px solid var(--rule);border-radius:4px;background:var(--surface);overflow:hidden;}
+.watch .lbl{
+  display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;
+  font-weight:600;color:var(--muted);padding:11px 18px 9px;border-bottom:1px solid var(--rule-soft);
+}
+.watch ul{list-style:none;margin:0;padding:0;max-width:none;}
+.watch li{margin:0;border-top:1px solid var(--rule-soft);}
+.watch li:first-child{border-top:0;}
+.watch a{
+  display:grid;grid-template-columns:auto 1fr;gap:11px;align-items:baseline;
+  padding:10px 18px;text-decoration:none;color:var(--ink);font-size:14.5px;line-height:1.4;
+}
+.watch a:hover{background:var(--surface-2);}
+.watch a .play{color:var(--accent);font-size:10px;line-height:1.6;}
+.watch a .t{text-decoration:underline;text-decoration-color:var(--rule);text-underline-offset:2px;}
+.watch a:hover .t{text-decoration-color:var(--accent);}
+.watch a .src{display:block;font-size:12.5px;color:var(--muted);text-decoration:none;margin-top:1px;}
+
+.why .lbl,.warn .lbl{
+  display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;
+  margin-bottom:8px;font-weight:600;
+}
+.why .lbl{color:var(--note);}
+.warn .lbl{color:var(--accent);}
+.why p:last-child,.warn p:last-child{margin-bottom:0;}
+
+/* ---------- problem cards ---------- */
+.probs{display:grid;gap:12px;margin:16px 0 0;}
+.prob{
+  background:var(--surface);border:1px solid var(--rule);border-radius:5px;
+  padding:0;overflow:hidden;box-shadow:var(--shadow);
+}
+.prob .q{display:grid;grid-template-columns:auto 1fr;gap:14px;padding:15px 20px;align-items:start;}
+.prob .q .id{font-family:var(--mono);font-size:11.5px;font-weight:600;color:var(--accent);padding-top:3px;font-variant-numeric:tabular-nums;}
+.prob .q .body{min-width:0;}
+.prob .q .body > *:last-child{margin-bottom:0;}
+details{border-top:1px dashed var(--rule);}
+details summary{
+  list-style:none;cursor:pointer;padding:10px 20px 10px 60px;
+  font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);user-select:none;display:flex;align-items:center;gap:8px;
+}
+details summary::-webkit-details-marker{display:none;}
+details summary::before{content:"+";font-size:14px;line-height:1;color:var(--accent);width:10px;}
+details[open] summary::before{content:"–";}
+details summary:hover{color:var(--accent-ink);background:var(--surface-2);}
+.sol{padding:4px 20px 18px 60px;font-size:15px;border-top:1px solid var(--rule-soft);}
+.sol > *:last-child{margin-bottom:0;}
+.sol .eq{box-shadow:none;background:var(--surface-2);border-color:var(--rule-soft);border-left-color:var(--rule);}
+@media (max-width:600px){
+  .prob .q{grid-template-columns:1fr;gap:6px;}
+  details summary,.sol{padding-left:20px;}
+}
+
+/* ---------- tables ---------- */
+.tw{overflow-x:auto;margin:0 0 18px;border:1px solid var(--rule);border-radius:5px;background:var(--surface);}
+table{border-collapse:collapse;width:100%;font-size:14.5px;}
+th{
+  text-align:left;font-family:var(--mono);font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;
+  font-weight:600;color:var(--muted);padding:11px 16px;border-bottom:1px solid var(--rule);white-space:nowrap;
+}
+td{padding:11px 16px;border-bottom:1px solid var(--rule-soft);vertical-align:top;}
+tr:last-child td{border-bottom:0;}
+
+/* ---------- figures ---------- */
+figure{margin:22px 0;background:var(--surface);border:1px solid var(--rule);border-radius:5px;padding:22px 20px 14px;box-shadow:var(--shadow);}
+figure > svg,.fig-2 > svg{display:block;width:100%;height:auto;max-width:460px;margin:0 auto;}
+figcaption mjx-container{display:inline !important;margin:0 !important;}
+figcaption mjx-container svg{width:auto;height:auto;max-width:none;display:inline;vertical-align:middle;}
+figcaption{margin-top:14px;padding-top:12px;border-top:1px solid var(--rule-soft);font-size:13px;color:var(--muted);text-align:center;max-width:52ch;margin-left:auto;margin-right:auto;}
+.fig-2{display:grid;grid-template-columns:1fr 1fr;gap:18px;justify-items:center;}
+.fig-2 > svg{max-width:250px;}
+.fig-2 text{font-size:10px;}
+@media (max-width:640px){.fig-2{grid-template-columns:1fr;}}
+.svg-ink{stroke:var(--ink);}
+.svg-rule{stroke:var(--rule);}
+.svg-accent{stroke:var(--accent);}
+.svg-note{stroke:var(--note);}
+figure text{font-family:var(--sans);font-size:11.5px;fill:var(--ink-2);letter-spacing:.01em;}
+text.lab-accent{fill:var(--accent);}
+text.lab-note{fill:var(--note);}
+
+/* ---------- closing ---------- */
+.closing{grid-column:1/-1;border-top:1px solid var(--rule);padding-top:28px;margin-top:8px;color:var(--muted);font-size:13.5px;}
+.closing p{max-width:70ch;}
+
+/* ---------- print ---------- */
+@media print{
+  :root{--bg:#fff;--surface:#fff;--surface-2:#f4f6f8;--shadow:none;}
+  body{font-size:10.5pt;line-height:1.5;background:#fff;}
+  .shell{display:block;max-width:none;padding:0;}
+  .rail{display:none;}
+  .masthead{padding-top:0;page-break-after:always;}
+  section{page-break-inside:auto;margin-bottom:26pt;}
+  .sec-head{page-break-after:avoid;page-break-inside:avoid;}
+  h4,h3{page-break-after:avoid;}
+  .eq,figure,.prob,.why,.warn,.tw{page-break-inside:avoid;box-shadow:none;}
+  details summary{display:none;}
+  .watch a{color:inherit;}
+  .watch a .t{text-decoration:none;}
+  .watch a[href^="http"] .src::after{content:"  " attr(href);word-break:break-all;}
+  .sol{padding-left:20px;border-top:1px dashed var(--rule);}
+  a{color:inherit;text-decoration:none;}
+  @page{size:letter;margin:0.85in 0.9in;}
+}
+</style>
+
+</head>
+<body>
+<div class="shell">
+
+  <header class="masthead">
+    <p class="eyebrow"><span>Honors Physics III</span><span class="sep">/</span><span>01:750:273</span><span class="sep">/</span><span class="plain">Fall 2026</span></p>
+    <h1>The 273 Math Toolkit</h1>
+    <p class="standfirst">The calculus and Physics I&ndash;II material this course will use without stopping to explain it. Work the <strong>diagnostic</strong> first, closed-book; whatever you stumble on points you at a section below, and every section ends with the place in 273 where that particular tool gets used.</p>
+    <dl class="masthead-meta">
+      <div class="mm"><dt>Sections</dt><dd>12</dd></div>
+      <div class="mm"><dt>Diagnostic</dt><dd>14 problems, ~45 min</dd></div>
+      <div class="mm"><dt>Assumed</dt><dd>Calculus I&ndash;II, Physics I&ndash;II</dd></div>
+      <div class="mm"><dt>Solutions</dt><dd>Click to reveal</dd></div>
+      <div class="mm"><dt>Video links</dt><dd>20, mostly 3Blue1Brown</dd></div>
+    </dl>
+  </header>
+
+  <nav class="rail" aria-label="Contents">
+    <h2>Contents</h2>
+    <ol id="toc">
+      <li><a href="#diagnostic"><span class="n">00</span><span>The diagnostic</span></a></li>
+      <li><a href="#calculus"><span class="n">01</span><span>Derivatives &amp; integrals</span></a></li>
+      <li><a href="#complex"><span class="n">02</span><span>Complex numbers</span></a></li>
+      <li><a href="#exponentials"><span class="n">03</span><span>Exponentials &amp; Euler</span></a></li>
+      <li><a href="#taylor"><span class="n">04</span><span>Taylor expansion</span></a></li>
+      <li><a href="#vectors"><span class="n">05</span><span>Vectors</span></a></li>
+      <li><a href="#fields"><span class="n">06</span><span>Gradient, divergence, curl</span></a></li>
+      <li><a href="#identities"><span class="n">07</span><span>Vector identities</span></a></li>
+      <li><a href="#gauss"><span class="n">08</span><span>Divergence theorem</span></a></li>
+      <li><a href="#stokes"><span class="n">09</span><span>Stokes' theorem</span></a></li>
+      <li><a href="#odes"><span class="n">10</span><span>The two ODEs</span></a></li>
+      <li><a href="#gaussian"><span class="n">11</span><span>Gaussian integrals</span></a></li>
+      <li><a href="#delta"><span class="n">12</span><span>Kronecker &amp; Dirac delta</span></a></li>
+    </ol>
+  </nav>
+
+  <main>
+
+  <!-- ============ 00 DIAGNOSTIC ============ -->
+  <section id="diagnostic">
+    <div class="sec-head"><span class="sec-n">00</span><h2 class="sec-t">The diagnostic</h2></div>
+    <p class="lede">Fourteen problems. No notes, no calculator, and stop after about forty-five minutes whether or not you are finished. The point is to find out what you have to look up, so looking things up defeats it.</p>
+    <p>Then check yourself against the solutions. Anything you missed, or got right slowly and painfully, points at a section below. Getting all fourteen is not the expectation; knowing which ones you missed is.</p>
+
+    <div class="probs">
+      <div class="prob"><div class="q"><span class="id">D1</span><div class="body"><p>Solve \(y''(x) = -k^2 y(x)\) for real constant \(k\). Give two independent solutions and the general one.</p></div></div>
+        <details><summary>Solution</summary><div class="sol">
+          <p>Two independent solutions are \(\cos kx\) and \(\sin kx\), so</p>
+          <div class="eq"><div class="eqrow">$$y(x) = A\cos kx + B\sin kx$$</div></div>
+          <p>The exponential form \(y = Ce^{ikx} + De^{-ikx}\) is the same solution space written in a different basis.</p>
+        </div></details></div>
+
+      <div class="prob"><div class="q"><span class="id">D2</span><div class="body"><p>Solve \(y''(x) = +k^2 y(x)\).</p></div></div>
+        <details><summary>Solution</summary><div class="sol">
+          <div class="eq"><div class="eqrow">$$y(x) = Ae^{kx} + Be^{-kx} \quad\text{or equivalently}\quad y(x) = A'\cosh kx + B'\sinh kx$$</div></div>
+          <p>No oscillation. The sign of the constant is the whole story, and §10 is about why.</p>
+        </div></details></div>
+
+      <div class="prob"><div class="q"><span class="id">D3</span><div class="body"><p>Differentiate, with \(a,\ k,\ \beta\) constant: \(\ \sin(ax)\), \(\ e^{ax}\), \(\ e^{ikx}\), \(\ e^{-\beta x^2}\).</p></div></div>
+        <details><summary>Solution</summary><div class="sol">
+          <div class="eq"><div class="eqrow">$$a\cos(ax), \qquad ae^{ax}, \qquad ike^{ikx}, \qquad -2\beta x\,e^{-\beta x^2}$$</div></div>
+          <p>The third one is the reason \(e^{ikx}\) shows up everywhere in quantum mechanics: differentiating it returns the same function times a number.</p>
+        </div></details></div>
+
+      <div class="prob"><div class="q"><span class="id">D4</span><div class="body"><p>Evaluate \(\displaystyle\int_0^L \sin(\pi x/L)\,\dd x\).</p></div></div>
+        <details><summary>Solution</summary><div class="sol">
+          <div class="eq"><div class="eqrow">$$\int_0^L \sin\!\frac{\pi x}{L}\,\dd x = \left[-\frac{L}{\pi}\cos\frac{\pi x}{L}\right]_0^L = -\frac{L}{\pi}(-1-1) = \frac{2L}{\pi}$$</div></div>
+        </div></details></div>
+
+      <div class="prob"><div class="q"><span class="id">D5</span><div class="body"><p>Evaluate \(\displaystyle\int_0^L \sin(\pi x/L)\cos(\pi x/L)\,\dd x\).</p></div></div>
+        <details><summary>Solution</summary><div class="sol">
+          <p>Use \(\sin\theta\cos\theta = \tfrac12\sin 2\theta\):</p>
+          <div class="eq"><div class="eqrow">$$\frac12\int_0^L \sin\!\frac{2\pi x}{L}\,\dd x = \frac12\left[-\frac{L}{2\pi}\cos\frac{2\pi x}{L}\right]_0^L = 0$$</div></div>
+          <p>Zero, and it had to be: the integrand is odd about the midpoint \(x=L/2\). Seeing that before integrating saves you a minute on an exam.</p>
+        </div></details></div>
+
+      <div class="prob"><div class="q"><span class="id">D6</span><div class="body"><p>Write \(e^{ikx}\) in terms of sines and cosines. What is its real part? Its imaginary part? (\(k,x\) real.)</p></div></div>
+        <details><summary>Solution</summary><div class="sol">
+          <div class="eq"><div class="eqrow">$$e^{ikx} = \cos kx + i\sin kx, \qquad \operatorname{Re} = \cos kx, \qquad \operatorname{Im} = \sin kx$$</div></div>
+        </div></details></div>
+
+      <div class="prob"><div class="q"><span class="id">D7</span><div class="body"><p>For \(z = 3 + 4i\), find \(z^*\), \(|z|\), and write \(z\) in the form \(|z|e^{i\theta}\).</p></div></div>
+        <details><summary>Solution</summary><div class="sol">
+          <p>\(z^* = 3-4i\), and \(|z|^2 = z^*z = 9+16 = 25\), so \(|z| = 5\). The angle is \(\theta = \arctan(4/3) \approx 0.927\) rad, giving \(z = 5e^{0.927i}\).</p>
+        </div></details></div>
+
+      <div class="prob"><div class="q"><span class="id">D8</span><div class="body"><p>Expand \(\gamma = (1 - v^2/c^2)^{-1/2}\) to the first correction beyond 1, for \(v \ll c\).</p></div></div>
+        <details><summary>Solution</summary><div class="sol">
+          <div class="eq"><div class="eqrow">$$\gamma \approx 1 + \frac{1}{2}\frac{v^2}{c^2}$$</div></div>
+          <p>Which is why \(E = \gamma mc^2 \approx mc^2 + \tfrac12 mv^2\). You will do this expansion in the first three weeks.</p>
+        </div></details></div>
+
+      <div class="prob"><div class="q"><span class="id">D9</span><div class="body"><p>To leading order for small \(\theta\), what are \(\sin\theta\), \(\cos\theta\), and \(e^{\theta}\)?</p></div></div>
+        <details><summary>Solution</summary><div class="sol">
+          <div class="eq"><div class="eqrow">$$\sin\theta \approx \theta, \qquad \cos\theta \approx 1 - \tfrac12\theta^2, \qquad e^{\theta} \approx 1 + \theta$$</div></div>
+          <p>Note that the leading correction to \(\cos\) is second order. Truncating it at 1 is right more often than people expect, and wrong exactly when the \(\theta^2\) term is the physics.</p>
+        </div></details></div>
+
+      <div class="prob"><div class="q"><span class="id">D10</span><div class="body"><p>Given \(\vb a = (1,2,0)\) and \(\vb b = (0,1,3)\), compute \(\vb a\cdot\vb b\) and \(\vb a\times\vb b\).</p></div></div>
+        <details><summary>Solution</summary><div class="sol">
+          <p>\(\vb a\cdot\vb b = 0 + 2 + 0 = 2\).</p>
+          <div class="eq"><div class="eqrow">$$\vb a\times\vb b = \big(2\cdot3-0\cdot1,\ \ 0\cdot0-1\cdot3,\ \ 1\cdot1-2\cdot0\big) = (6,\,-3,\,1)$$</div></div>
+          <p>Check it: \((6,-3,1)\) dotted into either input gives zero.</p>
+        </div></details></div>
+
+      <div class="prob"><div class="q"><span class="id">D11</span><div class="body"><p>For \(\vb F = (-y,\ x,\ 0)\), compute \(\nabla\cdot\vb F\) and \(\nabla\times\vb F\).</p></div></div>
+        <details><summary>Solution</summary><div class="sol">
+          <p>\(\nabla\cdot\vb F = \partial_x(-y) + \partial_y(x) + \partial_z(0) = 0\).</p>
+          <div class="eq"><div class="eqrow">$$\nabla\times\vb F = \left(\frac{\partial F_z}{\partial y}-\frac{\partial F_y}{\partial z},\ \frac{\partial F_x}{\partial z}-\frac{\partial F_z}{\partial x},\ \frac{\partial F_y}{\partial x}-\frac{\partial F_x}{\partial y}\right) = (0,0,2) = 2\vhat z$$</div></div>
+          <p>A pure rotation: nothing flows out of any point, and the whole field circulates about \(\hat z\).</p>
+        </div></details></div>
+
+      <div class="prob"><div class="q"><span class="id">D12</span><div class="body"><p>Evaluate \(\displaystyle\int_{-\infty}^{\infty} e^{-ax^2}\dd x\) and \(\displaystyle\int_{-\infty}^{\infty} x^2 e^{-ax^2}\dd x\) for \(a&gt;0\).</p></div></div>
+        <details><summary>Solution</summary><div class="sol">
+          <div class="eq"><div class="eqrow">$$\int_{-\infty}^{\infty} e^{-ax^2}\dd x = \sqrt{\frac{\pi}{a}}, \qquad \int_{-\infty}^{\infty} x^2 e^{-ax^2}\dd x = \frac{1}{2}\sqrt{\frac{\pi}{a^3}}$$</div></div>
+          <p>The second follows from the first by differentiating with respect to \(a\). §11 does it slowly.</p>
+        </div></details></div>
+
+      <div class="prob"><div class="q"><span class="id">D13</span><div class="body"><p>Evaluate \(\displaystyle\int_{-\infty}^{\infty} f(x)\,\delta(x-x_0)\,\dd x\) and \(\displaystyle\int_{-\infty}^{\infty}\delta(3x)\,\dd x\).</p></div></div>
+        <details><summary>Solution</summary><div class="sol">
+          <p>The first is \(f(x_0)\). The second is \(1/3\), from the scaling property \(\delta(ax) = \delta(x)/|a|\).</p>
+        </div></details></div>
+
+      <div class="prob"><div class="q"><span class="id">D14</span><div class="body"><p>What is \(\displaystyle\sum_{j} \delta_{ij}\,a_j\)?</p></div></div>
+        <details><summary>Solution</summary><div class="sol">
+          <p>\(a_i\). The Kronecker delta collapses a sum to one term, exactly the way the Dirac delta collapses an integral to one point.</p>
+        </div></details></div>
+    </div>
+  </section>
+
+  <!-- ============ 01 CALCULUS ============ -->
+  <section id="calculus">
+    <div class="sec-head"><span class="sec-n">01</span><h2 class="sec-t">Derivatives and integrals</h2></div>
+    <p class="lede">These should be automatic. If you are deriving \(\frac{\dd}{\dd x}e^{ax}\) from the product rule during an exam, you have already lost the problem.</p>
+
+    <h3>The working set</h3>
+    <div class="tw"><table>
+      <thead><tr><th>Function</th><th>Derivative</th><th>Antiderivative</th></tr></thead>
+      <tbody>
+        <tr><td>\(x^n\)</td><td>\(nx^{n-1}\)</td><td>\(x^{n+1}/(n+1)\), \(n\neq-1\)</td></tr>
+        <tr><td>\(e^{ax}\)</td><td>\(ae^{ax}\)</td><td>\(e^{ax}/a\)</td></tr>
+        <tr><td>\(\sin(ax)\)</td><td>\(a\cos(ax)\)</td><td>\(-\cos(ax)/a\)</td></tr>
+        <tr><td>\(\cos(ax)\)</td><td>\(-a\sin(ax)\)</td><td>\(\sin(ax)/a\)</td></tr>
+        <tr><td>\(\ln x\)</td><td>\(1/x\)</td><td>\(x\ln x - x\)</td></tr>
+        <tr><td>\(e^{-\beta x^2}\)</td><td>\(-2\beta x\,e^{-\beta x^2}\)</td><td>no elementary form; see §11</td></tr>
+      </tbody>
+    </table></div>
+
+    <h3>Integration by parts</h3>
+    <p>You will use this constantly for expectation values, where the derivative sits on the wrong factor.</p>
+    <div class="eq"><div class="eqrow">$$\int_a^b u\,\dd v = \big[uv\big]_a^b - \int_a^b v\,\dd u$$</div></div>
+    <p>In quantum problems the boundary term almost always vanishes, because a normalizable wavefunction has to go to zero at infinity. Almost always is not always, so check it rather than assuming it.</p>
+
+    <h3>Two habits worth building</h3>
+    <p><strong>Look for symmetry before integrating.</strong> An odd integrand over a symmetric interval gives zero. This kills roughly half the integrals in a quantum mechanics course, including every \(\langle x\rangle\) for a stationary state of a symmetric potential.</p>
+    <p><strong>Check dimensions at the end.</strong> If \(\langle x^2\rangle\) came out with units of length, you made an algebra error somewhere and you now know it without redoing the problem.</p>
+
+    <div class="why"><span class="lbl">Where this shows up</span>
+      <p>Normalizing \(\psi\), computing \(\langle x\rangle\) and \(\langle p\rangle\), and every probability you will calculate from the square well onward. It is the single most-used skill in the second half of the course.</p>
+    </div>
+      <div class="watch"><span class="lbl">Watch</span>
+      <ul>
+        <li><a href="https://www.youtube.com/watch?v=WUvTyaaNkzM"><span class="play">&#9654;</span><span><span class="t">The essence of calculus</span><span class="src">3Blue1Brown &middot; Essence of calculus, ch. 1</span></span></a></li>
+        <li><a href="https://www.youtube.com/watch?v=9vKqVkMQHKk"><span class="play">&#9654;</span><span><span class="t">The paradox of the derivative</span><span class="src">3Blue1Brown &middot; Essence of calculus, ch. 2</span></span></a></li>
+        <li><a href="https://www.youtube.com/watch?v=rfG8ce4nNh0"><span class="play">&#9654;</span><span><span class="t">Integration and the fundamental theorem of calculus</span><span class="src">3Blue1Brown &middot; Essence of calculus, ch. 8</span></span></a></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ 02 COMPLEX ============ -->
+  <section id="complex">
+    <div class="sec-head"><span class="sec-n">02</span><h2 class="sec-t">Complex numbers</h2></div>
+    <p class="lede">In this course the wavefunction is genuinely complex, not a bookkeeping trick you take the real part of at the end. Being fluent here is not optional.</p>
+
+    <h4>Cartesian form</h4>
+    <p>A complex number carries two real numbers, so you can think of it as a point in a plane:</p>
+    <div class="eq"><div class="eqrow">$$z = x + iy \longleftrightarrow (x,y), \qquad i \equiv \sqrt{-1},\quad i^2=-1,\ i^3=-i,\ i^4=+1$$</div></div>
+    <p>The <strong>complex conjugate</strong> flips the sign of every \(i\):</p>
+    <div class="eq"><div class="eqrow">$$z^* = x - iy \longleftrightarrow (x,-y)$$</div></div>
+
+    <figure>
+      <svg viewBox="0 0 330 230" role="img" aria-label="Argand diagram showing z at angle theta above the real axis and its conjugate z-star reflected below">
+        <defs>
+          <marker id="ah-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--ink)"/>
+          </marker>
+          <marker id="ah-acc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--accent)"/>
+          </marker>
+        </defs>
+        <g stroke="var(--ink)" fill="none" stroke-width="1.2">
+          <line x1="30" y1="118" x2="300" y2="118" marker-end="url(#ah-ink)"/>
+          <line x1="70" y1="212" x2="70" y2="18" marker-end="url(#ah-ink)"/>
+        </g>
+        <g stroke="var(--accent)" fill="none" stroke-width="2">
+          <line x1="70" y1="118" x2="232" y2="52" marker-end="url(#ah-acc)"/>
+          <line x1="70" y1="118" x2="232" y2="184" marker-end="url(#ah-acc)"/>
+        </g>
+        <g stroke="var(--rule)" stroke-width="1" stroke-dasharray="3 3" fill="none">
+          <line x1="232" y1="52" x2="232" y2="118"/>
+          <line x1="70" y1="52" x2="232" y2="52"/>
+        </g>
+        <path d="M 112 118 A 42 42 0 0 0 108.9 102.3" fill="none" stroke="var(--note)" stroke-width="1.4"/>
+        <text x="120" y="112" class="lab-note">θ</text>
+        <text x="240" y="48" class="lab-accent">z = x + iy</text>
+        <text x="240" y="190" class="lab-accent">z* = x − iy</text>
+        <text x="292" y="134">x</text>
+        <text x="44" y="26">iy</text>
+        <text x="146" y="134">|z|cos θ</text>
+      </svg>
+      <figcaption>\(z\) and \(z^*\) have the same length and sit at angles \(+\theta\) and \(-\theta\). Conjugation is reflection across the real axis.</figcaption>
+    </figure>
+
+    <h4>Modulus</h4>
+    <p>The length of \(z\) comes from the Pythagorean theorem, and multiplying by the conjugate is the clean way to get it:</p>
+    <div class="eq"><div class="eqrow">$$|z|^2 = z^*z = (x-iy)(x+iy) = x^2 + ixy - ixy - i^2y^2 = x^2 + y^2$$</div></div>
+    <p>The cross terms cancel and \(-i^2 = +1\), so \(|z|^2\) is real and non-negative no matter what \(z\) is. That is the property the whole probability interpretation of quantum mechanics rests on.</p>
+
+    <h4>Polar form</h4>
+    <div class="eq"><div class="eqrow">$$z = |z|\big(\cos\theta + i\sin\theta\big) = |z|e^{i\theta}, \qquad z^* = |z|e^{-i\theta}$$</div></div>
+    <div class="eq plain"><span class="tag">and so</span><div class="eqrow">$$|z|^2 = |z|e^{-i\theta}\cdot|z|e^{i\theta} = |z|^2 e^{0} = |z|^2$$</div></div>
+    <p>Use Cartesian form to add, polar form to multiply. Multiplying in polar form multiplies the lengths and adds the angles, which turns most trigonometric identities into one line of arithmetic.</p>
+
+    <div class="warn"><span class="lbl">Common slip</span>
+      <p>\(|z|^2\) is \(z^*z\), not \(z^2\). For \(z = 3+4i\), \(z^2 = -7 + 24i\) while \(|z|^2 = 25\). Writing \(\psi^2\) when you mean \(|\psi|^2\) will produce a complex "probability" and is the single most common error on the first quantum problem set.</p>
+    </div>
+
+    <div class="why"><span class="lbl">Where this shows up</span>
+      <p>\(\psi(x,t)\) is complex-valued and unobservable; \(|\psi|^2 = \psi^*\psi\) is the real probability density you measure. Every normalization, every expectation value, and every interference calculation in the back half of this course is a \(z^*z\) in disguise.</p>
+    </div>
+      <div class="watch"><span class="lbl">Watch</span>
+      <ul>
+        <li><a href="https://www.youtube.com/watch?v=5PcpBw5Hbwo"><span class="play">&#9654;</span><span><span class="t">Complex number fundamentals</span><span class="src">3Blue1Brown &middot; Lockdown math, ep. 3</span></span></a></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ 03 EXPONENTIALS ============ -->
+  <section id="exponentials">
+    <div class="sec-head"><span class="sec-n">03</span><h2 class="sec-t">Exponentials and Euler's formula</h2></div>
+    <p class="lede">One identity does most of the work in this course, and it is worth being able to write down without hesitating.</p>
+
+    <div class="eq"><span class="tag">Euler's formula</span><div class="eqrow">$$e^{i\theta} = \cos\theta + i\sin\theta$$</div></div>
+
+    <h3>Algebra you should not have to think about</h3>
+    <div class="eq plain"><div class="eqrow">$$e^0 = 1, \qquad e^x e^y = e^{x+y}, \qquad \frac{e^x}{e^y} = e^{x-y}, \qquad \big(e^x\big)^n = e^{nx}$$</div></div>
+
+    <h4>Sines and cosines from exponentials</h4>
+    <p>Adding and subtracting \(e^{\pm i\theta}\) inverts Euler's formula:</p>
+    <div class="eq"><div class="eqrow">$$\cos\theta = \frac{e^{i\theta}+e^{-i\theta}}{2}, \qquad \sin\theta = \frac{e^{i\theta}-e^{-i\theta}}{2i}$$</div></div>
+    <p>These two are how you move between the "standing wave" and "travelling wave" descriptions of the same state, which comes up the first time you solve the finite square well.</p>
+
+    <h4>The plane wave</h4>
+    <div class="eq"><div class="eqrow">$$e^{i(kx-\omega t)} = \cos(kx-\omega t) + i\sin(kx-\omega t)$$</div></div>
+    <p>A disturbance oscillating in both the real and the imaginary direction, travelling in \(+x\) at speed \(\omega/k\). Note that its modulus is 1 everywhere: a plane wave has the same probability density at every point in space, which is the mathematical statement of "perfectly known momentum, completely unknown position."</p>
+
+    <div class="why"><span class="lbl">Where this shows up</span>
+      <p>Free-particle solutions \(\psi \sim e^{i(kx-\omega t)}\), the time evolution factor \(e^{-iEt/\hbar}\) attached to every stationary state, de Broglie's relation \(p = \hbar k\), and the phase factors that make double-slit interference come out right.</p>
+    </div>
+      <div class="watch"><span class="lbl">Watch</span>
+      <ul>
+        <li><a href="https://www.youtube.com/watch?v=m2MIpDrF7Es"><span class="play">&#9654;</span><span><span class="t">What&rsquo;s so special about Euler&rsquo;s number e?</span><span class="src">3Blue1Brown &middot; Essence of calculus, ch. 5</span></span></a></li>
+        <li><a href="https://www.youtube.com/watch?v=mvmuCPvRoWQ"><span class="play">&#9654;</span><span><span class="t">Euler&rsquo;s formula with introductory group theory</span><span class="src">3Blue1Brown</span></span></a></li>
+        <li><a href="https://www.youtube.com/watch?v=-j8PzkZ70Lg"><span class="play">&#9654;</span><span><span class="t">Why complex exponents matter</span><span class="src">3Blue1Brown &middot; Laplace transform prelude</span></span></a></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ 04 TAYLOR ============ -->
+  <section id="taylor">
+    <div class="sec-head"><span class="sec-n">04</span><h2 class="sec-t">Taylor expansion</h2></div>
+    <p class="lede">Modern physics is largely the study of limits: what happens when \(v/c\) is small, when \(\hbar\omega/k_BT\) is small, when a potential is nearly flat. Taylor expansion is how you take those limits.</p>
+
+    <div class="eq"><span class="tag">Expansion about \(x=a\)</span><div class="eqrow">$$f(x) = f(a) + \frac{f'(a)}{1!}(x-a) + \frac{f''(a)}{2!}(x-a)^2 + \frac{f'''(a)}{3!}(x-a)^3 + \cdots = \sum_{n=0}^{\infty}\frac{f^{(n)}(a)}{n!}(x-a)^n$$</div></div>
+    <p>with \(n! = 1\times2\times3\times\cdots\times n\) and \(0! \equiv 1\).</p>
+
+    <h3>The four you should have memorized</h3>
+    <div class="eq"><div class="eqrow">$$e^x = 1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} + \cdots$$</div><div class="eqrow">$$\cos x = 1 - \frac{x^2}{2!} + \frac{x^4}{4!} - \cdots$$</div><div class="eqrow">$$\sin x = x - \frac{x^3}{3!} + \frac{x^5}{5!} - \cdots$$</div><div class="eqrow">$$(1+x)^n = 1 + nx + \frac{n(n-1)}{2}x^2 + \cdots \qquad (|x|&lt;1)$$</div></div>
+    <p>Substituting \(x \to i\theta\) into the first and sorting real from imaginary terms gives you the second and third, which is one way to prove Euler's formula rather than assert it.</p>
+
+    <h4>Using it: keep only what you need</h4>
+    <p>If \(\varepsilon \equiv x - a \ll 1\) then \(\varepsilon^2, \varepsilon^3, \ldots\) are progressively negligible and you drop them. Two worked examples:</p>
+    <div class="eq"><div class="eqrow">$$e^{0.1} \approx 1 + 0.1 + \frac{(0.1)^2}{2} = 1.105 \qquad(\text{exact: } 1.1052\ldots)$$</div><div class="eqrow">$$\sin(0.1\,\mathrm{rad}) \approx \sin 0 + \cos(0)\times 0.1 = 0.1 \qquad(\text{exact: } 0.0998\ldots)$$</div></div>
+
+    <div class="warn"><span class="lbl">Common slip</span>
+      <p>The expansion parameter must be dimensionless. You cannot expand in "small \(v\)" because \(v\) has units and "small" is meaningless; you expand in \(v/c\). If your small parameter carries units, you have set the problem up wrong.</p>
+    </div>
+
+    <h4>The relativistic case</h4>
+    <p>Set \(\beta = v/c\) and use the binomial series:</p>
+    <div class="eq"><div class="eqrow">$$\gamma = \big(1-\beta^2\big)^{-1/2} \approx 1 + \tfrac12\beta^2 \quad\Longrightarrow\quad E = \gamma mc^2 \approx mc^2 + \tfrac12 mv^2$$</div></div>
+    <p>Rest energy plus the Newtonian kinetic energy. The fact that classical mechanics falls out of relativity as the first term of a series, rather than being contradicted by it, is worth sitting with for a minute.</p>
+
+    <div class="why"><span class="lbl">Where this shows up</span>
+      <p>Recovering \(\tfrac12mv^2\) from \(\gamma mc^2\); the low-frequency and high-frequency limits of the Planck distribution; approximating any potential near its minimum as a harmonic oscillator; and essentially every "show that this reduces to the classical result" problem you will be assigned.</p>
+    </div>
+      <div class="watch"><span class="lbl">Watch</span>
+      <ul>
+        <li><a href="https://www.youtube.com/watch?v=3d6DsjIBzJ4"><span class="play">&#9654;</span><span><span class="t">Taylor series</span><span class="src">3Blue1Brown &middot; Essence of calculus, ch. 11</span></span></a></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ 05 VECTORS ============ -->
+  <section id="vectors">
+    <div class="sec-head"><span class="sec-n">05</span><h2 class="sec-t">Vectors</h2></div>
+    <p class="lede">Mostly review from Physics I and II. The one thing to be careful about is which product returns a scalar and which returns a vector.</p>
+
+    <div class="eq plain"><div class="eqrow">$$\vec F \equiv \vb F = F_1\vhat x + F_2\vhat y + F_3\vhat z, \qquad \vhat x \equiv \vb i,\ \ \vhat y \equiv \vb j,\ \ \vhat z \equiv \vb k$$</div></div>
+    <p>The hat notation and the \(\vb{i},\vb{j},\vb{k}\) notation mean the same thing. Textbooks mix them freely and so will lecture.</p>
+
+    <h4>Dot product &rarr; scalar</h4>
+    <div class="eq"><div class="eqrow">$$\vb a\cdot\vb b = |\vb a||\vb b|\cos\theta = a_xb_x + a_yb_y + a_zb_z$$</div></div>
+    <p>Zero when the vectors are perpendicular, and \(\vb a\cdot\vb a = |\vb a|^2\).</p>
+
+    <h4>Cross product &rarr; vector</h4>
+    <div class="eq"><div class="eqrow">$$\vb a\times\vb b = \hat n\,|\vb a||\vb b|\sin\theta$$</div></div>
+    <p>where \(\hat n\) is perpendicular to both, with the direction your right hand gives. The determinant form is what you actually compute with:</p>
+    <div class="eq"><div class="eqrow">$$\vb A\times\vb B = \begin{vmatrix} \vhat x & \vhat y & \vhat z \\ A_x & A_y & A_z \\ B_x & B_y & B_z\end{vmatrix} = (A_yB_z-A_zB_y)\vhat x - (A_xB_z-A_zB_x)\vhat y + (A_xB_y-A_yB_x)\vhat z$$</div></div>
+    <p>Watch the minus sign on the middle component. Then check your answer by dotting it into both inputs, which must give zero, and takes five seconds.</p>
+
+    <div class="warn"><span class="lbl">Common slip</span>
+      <p>The cross product does not commute: \(\vb a\times\vb b = -\,\vb b\times\vb a\). Order matters for angular momentum, torque, and the magnetic force, and getting it backwards flips the physics.</p>
+    </div>
+
+    <div class="why"><span class="lbl">Where this shows up</span>
+      <p>Angular momentum \(\vb L = \vb r\times\vb p\), which becomes the operator whose eigenvalues give you the quantum numbers \(\ell\) and \(m\); magnetic moments and their coupling to spin; and relativistic momentum four-vectors.</p>
+    </div>
+      <div class="watch"><span class="lbl">Watch</span>
+      <ul>
+        <li><a href="https://www.youtube.com/watch?v=fNk_zzaMoSs"><span class="play">&#9654;</span><span><span class="t">Vectors, what even are they?</span><span class="src">3Blue1Brown &middot; Essence of linear algebra, ch. 1</span></span></a></li>
+        <li><a href="https://www.youtube.com/watch?v=LyGKycYT2v0"><span class="play">&#9654;</span><span><span class="t">Dot products and duality</span><span class="src">3Blue1Brown &middot; Essence of linear algebra, ch. 9</span></span></a></li>
+        <li><a href="https://www.youtube.com/watch?v=eu6i7WJeinw"><span class="play">&#9654;</span><span><span class="t">Cross products</span><span class="src">3Blue1Brown &middot; Essence of linear algebra, ch. 10</span></span></a></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ 06 FIELDS ============ -->
+  <section id="fields">
+    <div class="sec-head"><span class="sec-n">06</span><h2 class="sec-t">Gradient, divergence, curl</h2></div>
+    <p class="lede">A scalar field puts a number at every point in space. A vector field puts a vector there. The three derivative operators below move you between them.</p>
+
+    <div class="tw"><table>
+      <thead><tr><th>Operator</th><th>Takes</th><th>Gives</th><th>Answers the question</th></tr></thead>
+      <tbody>
+        <tr><td>\(\nabla F\)</td><td>scalar field</td><td>vector field</td><td>Which way is uphill, and how steep?</td></tr>
+        <tr><td>\(\nabla\cdot\vb F\)</td><td>vector field</td><td>scalar field</td><td>Is this point a source or a sink?</td></tr>
+        <tr><td>\(\nabla\times\vb F\)</td><td>vector field</td><td>vector field</td><td>About what axis does the field circulate here?</td></tr>
+      </tbody>
+    </table></div>
+
+    <h4>Gradient</h4>
+    <div class="eq"><div class="eqrow">$$\nabla F = \frac{\partial F}{\partial x}\vhat x + \frac{\partial F}{\partial y}\vhat y + \frac{\partial F}{\partial z}\vhat z$$</div></div>
+    <p>It points in the direction of steepest increase, and its magnitude is the rate of that increase. On a contour map it points straight across the contours.</p>
+
+    <h4>Divergence</h4>
+    <div class="eq"><div class="eqrow">$$\nabla\cdot\vb F = \frac{\partial F_x}{\partial x} + \frac{\partial F_y}{\partial y} + \frac{\partial F_z}{\partial z}$$</div></div>
+    <p>How much more field leaves a point than enters it. Positive divergence means a source sits there, which for the electric field means positive charge:</p>
+    <div class="eq plain"><span class="tag">Gauss's law, differential form</span><div class="eqrow">$$\nabla\cdot\vb E = \frac{\rho}{\varepsilon_0}$$</div></div>
+
+    <h4>Curl</h4>
+    <div class="eq"><div class="eqrow">$$\nabla\times\vb F = \left(\frac{\partial F_z}{\partial y}-\frac{\partial F_y}{\partial z}\right)\vhat x + \left(\frac{\partial F_x}{\partial z}-\frac{\partial F_z}{\partial x}\right)\vhat y + \left(\frac{\partial F_y}{\partial x}-\frac{\partial F_x}{\partial y}\right)\vhat z$$</div></div>
+    <p>Drop a tiny paddlewheel into the field. The curl points along its rotation axis, and the angular speed it picks up is half the magnitude of the curl.</p>
+    <div class="eq plain"><span class="tag">Faraday's law, differential form</span><div class="eqrow">$$\nabla\times\vb E = -\frac{\partial \vb B}{\partial t}$$</div></div>
+
+    <figure>
+      <div class="fig-2">
+        <svg viewBox="0 0 150 152" role="img" aria-label="Radial arrows pointing outward from a central point, illustrating positive divergence">
+          <defs><marker id="ah-d" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--accent)"/></marker></defs>
+          <g stroke="var(--accent)" stroke-width="1.6" fill="none">
+            <line x1="93" y1="75" x2="121" y2="75" marker-end="url(#ah-d)"/>
+            <line x1="88" y1="88" x2="108" y2="108" marker-end="url(#ah-d)"/>
+            <line x1="75" y1="93" x2="75" y2="121" marker-end="url(#ah-d)"/>
+            <line x1="62" y1="88" x2="42" y2="108" marker-end="url(#ah-d)"/>
+            <line x1="57" y1="75" x2="29" y2="75" marker-end="url(#ah-d)"/>
+            <line x1="62" y1="62" x2="42" y2="42" marker-end="url(#ah-d)"/>
+            <line x1="75" y1="57" x2="75" y2="29" marker-end="url(#ah-d)"/>
+            <line x1="88" y1="62" x2="108" y2="42" marker-end="url(#ah-d)"/>
+          </g>
+          <circle cx="75" cy="75" r="4" fill="var(--accent)"/>
+          <text x="75" y="147" text-anchor="middle">∇·F &gt; 0,  ∇×F = 0</text>
+        </svg>
+        <svg viewBox="0 0 150 152" role="img" aria-label="Circular arrows around a central point, illustrating nonzero curl">
+          <defs><marker id="ah-c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--note)"/></marker></defs>
+          <g stroke="var(--note)" stroke-width="1.6" fill="none">
+            <path d="M 110 75 A 35 35 0 0 0 41 71" marker-end="url(#ah-c)"/>
+            <path d="M 40 75 A 35 35 0 0 0 109 79" marker-end="url(#ah-c)"/>
+            <path d="M 95 75 A 20 20 0 0 0 56 71" marker-end="url(#ah-c)"/>
+            <path d="M 55 75 A 20 20 0 0 0 94 79" marker-end="url(#ah-c)"/>
+          </g>
+          <circle cx="75" cy="75" r="4" fill="var(--note)"/>
+          <text x="75" y="147" text-anchor="middle">∇×F ≠ 0,  ∇·F = 0</text>
+        </svg>
+      </div>
+      <figcaption>Field lines streaming away from a source have divergence and no curl. Field lines that close on themselves have curl and no divergence. Most real fields are some mixture of the two.</figcaption>
+    </figure>
+
+    <div class="why"><span class="lbl">Where this shows up</span>
+      <p>Lecture 1 rebuilds the electromagnetic wave from Maxwell's equations using all three. After that the operator you meet constantly is the Laplacian \(\nabla^2 = \nabla\cdot\nabla\), which is the kinetic energy term in the Schrödinger equation.</p>
+    </div>
+      <div class="watch"><span class="lbl">Watch</span>
+      <ul>
+        <li><a href="https://www.youtube.com/watch?v=rB83DpBJQsE"><span class="play">&#9654;</span><span><span class="t">Divergence and curl: the language of Maxwell&rsquo;s equations, fluid flow, and more</span><span class="src">3Blue1Brown</span></span></a></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ 07 IDENTITIES ============ -->
+  <section id="identities">
+    <div class="sec-head"><span class="sec-n">07</span><h2 class="sec-t">Vector identities</h2></div>
+    <p class="lede">Three of these carry almost all the weight. The first two are structural facts about \(\nabla\); the third is an algebraic identity you will use to untangle double cross products.</p>
+
+    <div class="eq"><span class="tag">The curl of a gradient vanishes</span><div class="eqrow">$$\nabla\times(\nabla f) = 0$$</div></div>
+    <div class="eq"><span class="tag">The divergence of a curl vanishes</span><div class="eqrow">$$\nabla\cdot(\nabla\times\vb A) = 0$$</div></div>
+    <div class="eq"><span class="tag">BAC-CAB rule</span><div class="eqrow">$$\vb a\times(\vb b\times\vb c) = \vb b\,(\vb a\cdot\vb c) - \vb c\,(\vb a\cdot\vb b)$$</div></div>
+
+    <p>The mnemonic for the last one is "back minus cab," which tells you the order of the letters but not the placement of the parentheses, so write it out once from the definition before you trust it.</p>
+
+    <div class="warn"><span class="lbl">Type-checking</span>
+      <p>Before believing any vector identity, check that both sides are the same kind of object. \(\nabla\cdot\vb A\) is a scalar, so \(\nabla\times(\nabla\cdot\vb A)\) is not merely zero, it is meaningless: curl acts on vector fields. Half of all identity errors are caught by this check alone.</p>
+    </div>
+
+    <h4>The one you will actually derive</h4>
+    <p>Combined with the two vanishing identities, this is what turns Maxwell's equations into the wave equation:</p>
+    <div class="eq"><div class="eqrow">$$\nabla\times(\nabla\times\vb A) = \nabla(\nabla\cdot\vb A) - \nabla^2\vb A$$</div></div>
+
+    <div class="why"><span class="lbl">Where this shows up</span>
+      <p>Lecture 1, deriving \(\nabla^2\vb E = \mu_0\varepsilon_0\,\partial^2\vb E/\partial t^2\) and reading the speed of light off the coefficient. A fuller list lives at <a href="https://en.wikipedia.org/wiki/Vector_calculus_identities">Wikipedia's vector calculus identities</a>; you are not expected to memorize past the three above.</p>
+    </div>
+  </section>
+
+  <!-- ============ 08 GAUSS ============ -->
+  <section id="gauss">
+    <div class="sec-head"><span class="sec-n">08</span><h2 class="sec-t">The divergence theorem</h2></div>
+    <p class="lede">Adding up the sources inside a region gives the same answer as measuring what crosses its boundary. That is the whole content of the theorem, and it is worth understanding in those words before the notation.</p>
+
+    <div class="eq"><div class="eqrow">$$\iiint_V (\nabla\cdot\vb F)\,\dd V = \oiint_S \vb F\cdot \dd\vb S$$</div></div>
+    <p>On the left, a volume integral over \(V\). On the right, a closed surface integral over the boundary \(S\), which is the flux through that surface. Sinks count as negative sources, so what the theorem really says is that the net flux out of a region equals the net source strength inside it.</p>
+
+    <h4>Worked example: Gauss's law in E&amp;M</h4>
+    <p>The integral form states that electric flux through a closed surface is set by the charge enclosed:</p>
+    <div class="eq plain"><div class="eqrow">$$\oiint_S \vb E\cdot \dd\vb S = \frac{Q_{\text{in}}}{\varepsilon_0}$$</div></div>
+    <p>Rewrite each side as a volume integral. The left by the divergence theorem, the right by writing \(Q_{\text{in}} = \iiint_V \rho\,\dd V\):</p>
+    <div class="eq"><div class="eqrow">$$\iiint_V (\nabla\cdot\vb E)\,\dd V = \iiint_V \frac{\rho}{\varepsilon_0}\,\dd V$$</div></div>
+    <p>This holds for <em>every</em> volume \(V\), which forces the integrands to be equal point by point:</p>
+    <div class="eq plain"><div class="eqrow">$$\nabla\cdot\vb E = \frac{\rho}{\varepsilon_0}$$</div></div>
+    <p>That "holds for every volume, therefore the integrands agree" step is the standard move for converting an integral law into a differential one, and it will reappear.</p>
+
+    <div class="why"><span class="lbl">Where this shows up</span>
+      <p>Rutherford scattering, where you need the field of a charge distribution; and later the continuity equation for probability, \(\partial|\psi|^2/\partial t + \nabla\cdot\vb j = 0\), which says probability is conserved by exactly this argument.</p>
+    </div>
+      <div class="watch"><span class="lbl">Watch</span>
+      <ul>
+        <li><a href="https://www.khanacademy.org/math/multivariable-calculus/greens-theorem-and-stokes-theorem/divergence-theorem-articles/a/divergence-theorem-proof"><span class="play">&#9654;</span><span><span class="t">Multivariable calculus: the divergence theorem</span><span class="src">Khan Academy &middot; articles and videos by Grant Sanderson (3Blue1Brown)</span></span></a></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ 09 STOKES ============ -->
+  <section id="stokes">
+    <div class="sec-head"><span class="sec-n">09</span><h2 class="sec-t">Stokes' theorem</h2></div>
+    <p class="lede">The same idea one dimension down: circulation around a loop equals total curl through any surface the loop bounds.</p>
+
+    <div class="eq"><div class="eqrow">$$\oint_C \vb A\cdot \dd\vec\ell = \iint_S (\nabla\times\vb A)\cdot \dd\vb S$$</div></div>
+    <p>Any surface \(S\) with \(C\) as its edge will do, and this is less strange than it sounds. Two surfaces sharing an edge differ by a closed surface, and the flux of a curl through any closed surface is zero by \(\nabla\cdot(\nabla\times\vb A) = 0\).</p>
+
+    <h4>Worked example: Faraday's law</h4>
+    <p>The EMF around a closed path equals minus the rate of change of magnetic flux through it:</p>
+    <div class="eq plain"><div class="eqrow">$$\oint_C \vb E\cdot \dd\vec\ell = -\frac{\dd\Phi_B}{\dd t} = -\frac{\dd}{\dd t}\iint_S \vb B\cdot \dd\vb S$$</div></div>
+    <p>Convert the left side with Stokes:</p>
+    <div class="eq"><div class="eqrow">$$\iint_S (\nabla\times\vb E)\cdot \dd\vb S = -\iint_S \frac{\partial\vb B}{\partial t}\cdot \dd\vb S \quad\Longrightarrow\quad \nabla\times\vb E = -\frac{\partial\vb B}{\partial t}$$</div></div>
+    <p>Same closing move as before: true for every surface, so true pointwise.</p>
+
+    <div class="why"><span class="lbl">Where this shows up</span>
+      <p>The Maxwell recap in lecture 1, and then in the Bohr model, where the quantization condition is a loop integral \(\oint p\,\dd q = nh\). Loop integrals of this kind are also where the Aharonov–Bohm effect comes from, if the course gets that far.</p>
+    </div>
+      <div class="watch"><span class="lbl">Watch</span>
+      <ul>
+        <li><a href="https://www.khanacademy.org/math/multivariable-calculus/greens-theorem-and-stokes-theorem/stokes-theorem-articles/a/stokes-theorem"><span class="play">&#9654;</span><span><span class="t">Multivariable calculus: Stokes&rsquo; theorem</span><span class="src">Khan Academy &middot; articles and videos by Grant Sanderson (3Blue1Brown)</span></span></a></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ 10 ODES ============ -->
+  <section id="odes">
+    <div class="sec-head"><span class="sec-n">10</span><h2 class="sec-t">The two differential equations</h2></div>
+    <p class="lede">You will solve the same second-order equation over and over this semester, with only the sign of the constant changing. Learn to read that sign and you can write the answer down before doing any work.</p>
+
+    <p>Start from the property that defines the exponential: it is the function that reproduces itself under differentiation.</p>
+    <div class="eq plain"><div class="eqrow">$$\frac{\dd}{\dd x}y(x) = y(x) \iff y(x) = Ae^{x}$$</div><div class="eqrow">$$\frac{\dd}{\dd x}\big(Ae^{kx}\big) = kAe^{kx}, \qquad \frac{\dd^2}{\dd x^2}\big(Ae^{ikx}\big) = (ik)^2Ae^{ikx} = -k^2Ae^{ikx}$$</div></div>
+    <p>That second line is the entire trick. Two derivatives of \(e^{ikx}\) return \(-k^2\) times the original, while two derivatives of \(e^{kx}\) return \(+k^2\) times it.</p>
+
+    <h4>Case 1: negative constant, oscillation</h4>
+    <div class="eq"><div class="eqrow">$$\frac{\dd^2 y}{\dd x^2} = -k^2 y \quad\Longrightarrow\quad y(x) = A\cos kx + B\sin kx = Ce^{ikx} + De^{-ikx}$$</div></div>
+    <p>The two forms describe the same two-dimensional solution space; \(A,B\) and \(C,D\) are related by the identities in §3. Which one you use is a matter of which boundary conditions are less painful.</p>
+    <p>Why oscillation? The second derivative is the curvature. With a minus sign, the function always curves back toward the axis, so it cannot run away.</p>
+
+    <h4>Case 2: positive constant, exponentials</h4>
+    <div class="eq"><div class="eqrow">$$\frac{\dd^2 y}{\dd x^2} = +k^2 y \quad\Longrightarrow\quad y(x) = Ae^{kx} + Be^{-kx}$$</div></div>
+    <p>Here the curvature always points away from the axis, so solutions grow or decay monotonically and never turn around. In a physical problem you usually discard the growing piece, because a wavefunction that blows up at infinity cannot be normalized.</p>
+
+    <figure>
+      <svg viewBox="0 0 330 160" role="img" aria-label="An oscillating cosine curve compared with a decaying and a growing exponential">
+        <line x1="20" y1="78" x2="315" y2="78" stroke="var(--rule)" stroke-width="1"/>
+        <path d="M 30,32 C 54.8,32 74,124 98.8,124 C 123.5,124 142.8,32 167.5,32 C 192.3,32 211.5,124 236.3,124 C 261,124 280.3,32 305,32" fill="none" stroke="var(--accent)" stroke-width="2.2"/>
+        <path d="M 30,36 C 78,80 122,102 190,110 C 240,115 275,117 305,118" fill="none" stroke="var(--note)" stroke-width="2.2"/>
+        <path d="M 30,118 C 60,117 95,115 145,110 C 213,102 257,80 305,36" fill="none" stroke="var(--note)" stroke-width="2.2" stroke-dasharray="5 4"/>
+        <text x="34" y="22" class="lab-accent">y″ = −k²y</text>
+        <text x="196" y="150" class="lab-note">y″ = +k²y</text>
+      </svg>
+      <figcaption>Scarlet: the oscillatory case, curving back on itself forever. Blue: the two exponential solutions of the positive-constant case, one decaying and one growing.</figcaption>
+    </figure>
+
+    <div class="why"><span class="lbl">Where this shows up</span>
+      <p>The time-independent Schrödinger equation is \(\psi'' = \frac{2m}{\hbar^2}\big(V-E\big)\psi\), so the sign of \(V-E\) picks the case. Inside a well, \(E &gt; V\) and you get case 1: oscillation, standing waves, quantized levels. Inside a barrier, \(E &lt; V\) and you get case 2: exponential decay, which is tunnelling. One equation, one sign, and most of the quantum mechanics in this course.</p>
+    </div>
+      <div class="watch"><span class="lbl">Watch</span>
+      <ul>
+        <li><a href="https://www.youtube.com/watch?v=p_di4Zn4wz4"><span class="play">&#9654;</span><span><span class="t">Differential equations, studying the unsolvable</span><span class="src">3Blue1Brown &middot; Differential equations, ch. 1</span></span></a></li>
+        <li><a href="https://www.youtube.com/watch?v=-j8PzkZ70Lg"><span class="play">&#9654;</span><span><span class="t">Why complex exponents matter</span><span class="src">3Blue1Brown &middot; where the two cases in this section come from</span></span></a></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ 11 GAUSSIAN ============ -->
+  <section id="gaussian">
+    <div class="sec-head"><span class="sec-n">11</span><h2 class="sec-t">Gaussian integrals</h2></div>
+    <p class="lede">\(e^{-x^2}\) has no elementary antiderivative, yet the integral over the whole line has a closed form. The trick that gets it is worth seeing once, because it explains where the \(\pi\) in the normal distribution comes from.</p>
+
+    <div class="eq"><span class="tag">Laplace, 1778</span><div class="eqrow">$$\int_{-\infty}^{\infty} e^{-x^2}\,\dd x = \sqrt{\pi}$$</div></div>
+
+    <h4>The derivation</h4>
+    <p>Call the integral \(I\) and square it, renaming the dummy variable in one copy:</p>
+    <div class="eq plain"><div class="eqrow">$$I^2 = \int_{-\infty}^{\infty} e^{-x^2}\dd x \int_{-\infty}^{\infty} e^{-y^2}\dd y = \int_{-\infty}^{\infty}\!\!\int_{-\infty}^{\infty} e^{-(x^2+y^2)}\,\dd x\,\dd y$$</div></div>
+    <p>Now the domain is the whole plane and the integrand depends only on \(x^2+y^2 = r^2\), which is begging for polar coordinates. The area element becomes \(r\,\dd r\,\dd\theta\), and that extra factor of \(r\) is what makes the integral doable:</p>
+    <div class="eq"><div class="eqrow">$$I^2 = \int_0^{2\pi}\!\!\int_0^{\infty} e^{-r^2}\,r\,\dd r\,\dd\theta = 2\pi\cdot\frac12 = \pi \quad\Longrightarrow\quad I = \sqrt{\pi}$$</div></div>
+    <p>using \(u = r^2\), \(\dd u = 2r\,\dd r\) for the radial piece. The \(\pi\) is geometric: it came from the angular integration, not from anything about exponentials.</p>
+
+    <h4>The forms you will need</h4>
+    <div class="eq"><div class="eqrow">$$\int_{-\infty}^{\infty} e^{-\alpha x^2}\dd x = \sqrt{\frac{\pi}{\alpha}}$$</div><div class="eqrow">$$\int_{-\infty}^{\infty} x^2 e^{-\alpha x^2}\dd x = \frac{\sqrt{\pi}}{2\,\alpha^{3/2}}, \qquad \int_{-\infty}^{\infty} x^4 e^{-\alpha x^2}\dd x = \frac{3\sqrt{\pi}}{4\,\alpha^{5/2}}$$</div></div>
+    <p>Every odd moment vanishes by symmetry. The even ones come from differentiating the first result with respect to \(\alpha\), repeatedly:</p>
+    <div class="eq plain"><div class="eqrow">$$\int_{-\infty}^{\infty} x^n e^{-\alpha x^2}\dd x = \frac{1\cdot3\cdot5\cdots(n-1)\,\sqrt{\pi}}{2^{n/2}\,\alpha^{(n+1)/2}}, \qquad n = 0,2,4,\ldots$$</div></div>
+    <p>Differentiating under the integral sign like this is legitimate whenever the integrand is continuous, which it is here. It is a cheap way to generate a whole family of results from one.</p>
+
+    <h4>The normalized Gaussian</h4>
+    <div class="eq plain"><div class="eqrow">$$\rho(x) = \frac{1}{\sigma\sqrt{2\pi}}e^{-x^2/2\sigma^2}, \qquad \int_{-\infty}^{\infty}\rho(x)\,\dd x = 1$$</div></div>
+
+    <div class="why"><span class="lbl">Where this shows up</span>
+      <p>The ground state of the harmonic oscillator is a Gaussian, so normalizing it and computing \(\langle x^2\rangle\) are moment integrals of exactly this type. Gaussian wavepackets are also the states that saturate the uncertainty relation, which makes them the standard example when \(\Delta x\,\Delta p \geq \hbar/2\) is introduced.</p>
+    </div>
+      <div class="watch"><span class="lbl">Watch</span>
+      <ul>
+        <li><a href="https://www.youtube.com/watch?v=cy8r7WSuT1I"><span class="play">&#9654;</span><span><span class="t">Why &pi; is in the normal distribution (beyond integral tricks)</span><span class="src">3Blue1Brown</span></span></a></li>
+        <li><a href="https://www.youtube.com/watch?v=MBnnXbOM5S4"><span class="play">&#9654;</span><span><span class="t">The more general uncertainty principle, beyond quantum</span><span class="src">3Blue1Brown</span></span></a></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ 12 DELTA ============ -->
+  <section id="delta">
+    <div class="sec-head"><span class="sec-n">12</span><h2 class="sec-t">Kronecker and Dirac deltas</h2></div>
+    <p class="lede">Two objects with one job: pick out a single term from a sum, or a single point from an integral. The Kronecker delta does it for discrete indices, the Dirac delta for continuous variables.</p>
+
+    <h4>Kronecker delta</h4>
+    <div class="eq"><div class="eqrow">$$\delta_{ij} = \begin{cases} 1 & i = j \\ 0 & i \neq j\end{cases} \qquad\Longrightarrow\qquad \sum_j \delta_{ij}\,a_j = a_i$$</div></div>
+    <p>It is the identity matrix written with indices, and it appears whenever you expand a state in an orthonormal basis, since \(\langle n | m\rangle = \delta_{nm}\).</p>
+
+    <h4>Dirac delta</h4>
+    <p>Not a function. It is a distribution, defined by what it does inside an integral rather than by its value at a point:</p>
+    <div class="eq"><div class="eqrow">$$\delta(x) = 0 \text{ for } x\neq0, \qquad \int_{-\infty}^{\infty}\delta(x)\,\dd x = 1$$</div></div>
+    <p>Picture a rectangle of width \(\varepsilon\) and height \(1/\varepsilon\) centred on the origin. Halve the width and double the height and the area stays 1; keep going and the height diverges while the area does not. The delta is the limit of that process.</p>
+    <div class="eq plain"><span class="tag">as a limit of rectangles</span><div class="eqrow">$$\delta_\varepsilon(x-x_0) = \frac{1}{\varepsilon}\,\mathrm{rect}\!\left[\frac{x-x_0}{\varepsilon}\right], \qquad \delta(x-x_0) = \lim_{\varepsilon\to0}\delta_\varepsilon(x-x_0)$$</div></div>
+    <p>The rectangle is not special. A Gaussian, a sinc, or any unit-area pulse narrowed to zero width does the same thing.</p>
+
+    <h3>The properties you will use</h3>
+    <div class="eq"><span class="tag">Sifting</span><div class="eqrow">$$\int_{-\infty}^{\infty} f(x)\,\delta(x-x_0)\,\dd x = f(x_0)$$</div></div>
+    <div class="eq"><span class="tag">Scaling</span><div class="eqrow">$$\delta(ax) = \frac{\delta(x)}{|a|}$$</div></div>
+    <div class="eq"><span class="tag">Convolution</span><div class="eqrow">$$f(x) * \delta(x-x_0) = f(x-x_0)$$</div></div>
+    <div class="eq"><span class="tag">Fourier transform of 1</span><div class="eqrow">$$\int_{-\infty}^{\infty} e^{-2\pi i\nu x}\,\dd x = \delta(\nu)$$</div></div>
+    <div class="eq"><span class="tag">Relation to the step function</span><div class="eqrow">$$u(x) = \begin{cases}0 & x&lt;0\\ 1 & x\geq0\end{cases}, \qquad \delta(x) = \frac{\dd u}{\dd x}$$</div></div>
+
+    <p>The sifting property is the one you will use daily, and it is easy to see why it holds. The delta kills everything except an infinitesimal neighbourhood of \(x_0\); over that neighbourhood \(f\) is essentially constant at \(f(x_0)\), so it comes out of the integral and leaves \(\int\delta = 1\) behind.</p>
+
+    <div class="why"><span class="lbl">Where this shows up</span>
+      <p>Free-particle states are not normalizable in the usual sense and are handled with \(\langle k|k'\rangle = \delta(k-k')\) instead. Beyond that: idealized point sources in scattering, the Dirac comb that gives the diffraction pattern of a periodic lattice, and the energy-conserving delta in Fermi's golden rule.</p>
+    </div>
+      <div class="watch"><span class="lbl">Watch</span>
+      <ul>
+        <li><a href="https://www.youtube.com/watch?v=KuXjwB4LzSA"><span class="play">&#9654;</span><span><span class="t">But what is a convolution?</span><span class="src">3Blue1Brown</span></span></a></li>
+        <li><a href="https://www.youtube.com/watch?v=spUNpyF58BY"><span class="play">&#9654;</span><span><span class="t">But what is the Fourier transform? A visual introduction</span><span class="src">3Blue1Brown</span></span></a></li>
+      </ul>
+    </div>
+  </section>
+
+  </main>
+
+  <footer class="closing">
+    <p>Prepared for Honors Physics III (01:750:273), Rutgers University, Department of Physics &amp; Astronomy. None of this is new material; it is the working set the course assumes you already have. If a section reads as unfamiliar rather than rusty, bring it to office hours in week one.</p>
+  </footer>
+
+</div>
+
+<script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['\\(', '\\)']],
+      displayMath: [['$$', '$$']],
+      processEscapes: true,
+      macros: {
+        vb: ['\\mathbf{#1}', 1],
+        vhat: ['\\hat{\\mathbf{#1}}', 1],
+        dd: '\\mathrm{d}'
+      }
+    },
+    svg: { fontCache: 'global', scale: 1.0 },
+    options: { renderActions: { addMenu: [] } },
+    startup: {
+      pageReady: function () {
+        return MathJax.startup.defaultPageReady().then(function () {
+          window.mathReady = true;
+          document.documentElement.setAttribute('data-math', 'ready');
+        });
+      }
+    }
+  };
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.js"></script>
+<script>
+  (function () {
+    var links = Array.prototype.slice.call(document.querySelectorAll('#toc a'));
+    var targets = links.map(function (a) { return document.getElementById(a.getAttribute('href').slice(1)); }).filter(Boolean);
+    if (!('IntersectionObserver' in window) || !targets.length) return;
+    var visible = new Set();
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { e.isIntersecting ? visible.add(e.target.id) : visible.delete(e.target.id); });
+      var first = targets.find(function (t) { return visible.has(t.id); });
+      links.forEach(function (a) { a.classList.toggle('here', !!first && a.getAttribute('href') === '#' + first.id); });
+    }, { rootMargin: '-10% 0px -70% 0px' });
+    targets.forEach(function (t) { io.observe(t); });
+  })();
+</script>
+
+</body>
+</html>

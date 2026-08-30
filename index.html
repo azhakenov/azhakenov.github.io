@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Abay Zhakenov | Theoretical Physicist</title>
+    <meta
+      name="description"
+      content="Abay Zhakenov — PhD candidate in theoretical condensed-matter physics at Rutgers University. Integrable systems, quantum impurities, and the thermodynamic Bethe ansatz."
+    />
+    <meta name="author" content="Abay Zhakenov" />
+    <meta name="keywords" content="Abay Zhakenov, theoretical physics, condensed matter, Rutgers University, quantum impurities, Bethe ansatz, integrable systems, Kondo effect" />
+
+    <link rel="canonical" href="https://abayzhakenov.com/" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://abayzhakenov.com/" />
+    <meta property="og:site_name" content="Abay Zhakenov" />
+    <meta property="og:title" content="Abay Zhakenov | Theoretical Physicist" />
+    <meta
+      property="og:description"
+      content="PhD candidate in theoretical condensed-matter physics at Rutgers University. Integrable systems, quantum impurities, and the thermodynamic Bethe ansatz."
+    />
+    <meta property="og:image" content="https://abayzhakenov.com/og-image.jpg" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Abay Zhakenov | Theoretical Physicist" />
+    <meta
+      name="twitter:description"
+      content="PhD candidate in theoretical condensed-matter physics at Rutgers University. Integrable systems, quantum impurities, and the thermodynamic Bethe ansatz."
+    />
+    <meta name="twitter:image" content="https://abayzhakenov.com/og-image.jpg" />
+
+    <link rel="icon" type="image/png" href="%BASE_URL%favicon.png" />
+    <link rel="icon" type="image/x-icon" href="%BASE_URL%favicon.ico" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- JSON-LD: helps a search for "Abay Zhakenov physics" resolve to this
+         site rather than a profile page on someone else's domain. -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Abay Zhakenov",
+        "url": "https://abayzhakenov.com/",
+        "image": "https://abayzhakenov.com/og-image.jpg",
+        "jobTitle": "PhD Candidate in Theoretical Physics",
+        "affiliation": {
+          "@type": "CollegeOrUniversity",
+          "name": "Rutgers University"
+        },
+        "email": "mailto:az417@physics.rutgers.edu",
+        "sameAs": [
+          "https://orcid.org/0000-0002-3027-1528",
+          "https://inspirehep.net/authors/1799380",
+          "https://www.linkedin.com/in/abay-zhakenov-4a086415a/"
+        ],
+        "knowsAbout": [
+          "Integrable systems",
+          "Quantum impurities",
+          "Thermodynamic Bethe ansatz",
+          "Kondo effect",
+          "Generalized hydrodynamics",
+          "Quantum many-body physics"
+        ]
+      }
+    </script>
+
+    <!-- GitHub Pages has no server-side routing, so a direct hit to a route
+         like /research 404s. public/404.html redirects here with the
+         original path encoded in the query string; this restores it before
+         React Router mounts. Standard "spa-github-pages" trick. -->
+    <script>
+      (function () {
+        var redirect = sessionStorage.redirect;
+        delete sessionStorage.redirect;
+        if (redirect && redirect !== location.href) {
+          history.replaceState(null, "", redirect);
+        }
+      })();
+    </script>
+  </head>
+
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

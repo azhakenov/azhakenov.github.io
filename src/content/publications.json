@@ -1,0 +1,127 @@
+{
+  "generatedAt": "2026-08-30T00:00:00.000Z",
+  "author": {
+    "name": "Abay Zhakenov",
+    "orcid": "0000-0002-3027-1528",
+    "inspireId": "1799380",
+    "inspireUrl": "https://inspirehep.net/authors/1799380",
+    "currentAffiliation": "Rutgers U., Piscataway"
+  },
+  "metrics": {
+    "papersCount": 10,
+    "citationsCount": 50,
+    "hIndex": 5
+  },
+  "publications": [
+    {
+      "id": "3190804",
+      "title": "Boundary phases and thermodynamics of the Kondo spin-$s$ chain: from overscreened Kondo to boundary-bound states",
+      "authors": ["Zhakenov, Abay", "Kattel, Pradip", "Gleis, Andreas", "Andrei, Natan"],
+      "year": "2026",
+      "journal": null,
+      "arxivId": "2608.12453",
+      "doi": null,
+      "citationCount": 0,
+      "inspireUrl": "https://inspirehep.net/literature/3190804"
+    },
+    {
+      "id": "3187745",
+      "title": "Breakdown of Monotonic Impurity Entropy Flow in $\\mathscr{PT}$-Symmetric Multichannel Kondo Systems",
+      "authors": ["Kattel, Pradip", "Zhakenov, Abay", "Andrei, Natan"],
+      "year": "2026",
+      "journal": null,
+      "arxivId": "2608.04083",
+      "doi": null,
+      "citationCount": 0,
+      "inspireUrl": "https://inspirehep.net/literature/3187745"
+    },
+    {
+      "id": "3174478",
+      "title": "Monotonic and non-Nonmonotonic Impurity Entropy flows in a $\\mathscr{PT}$-Symmetric Kondo Model",
+      "authors": ["Kattel, Pradip", "Zhakenov, Abay", "Andrei, Natan"],
+      "year": "2026",
+      "journal": null,
+      "arxivId": "2606.28495",
+      "doi": null,
+      "citationCount": 2,
+      "inspireUrl": "https://inspirehep.net/literature/3174478"
+    },
+    {
+      "id": "3092753",
+      "title": "Multichannel Kondo effect in one-dimensional superconducting leads",
+      "authors": ["Kattel, Pradip", "Zhakenov, Abay", "Andrei, Natan"],
+      "year": "2025",
+      "journal": "Phys.Rev.B 113, 165130 (2026)",
+      "arxivId": "2512.11965",
+      "doi": "10.1103/fzw2-xk49",
+      "citationCount": 3,
+      "inspireUrl": "https://inspirehep.net/literature/3092753"
+    },
+    {
+      "id": "2964300",
+      "title": "Thermodynamics in a split Hilbert space: Quantum impurity at the edge of the Heisenberg chain",
+      "authors": ["Zhakenov, Abay", "Kattel, Pradip", "Andrei, Natan"],
+      "year": "2025",
+      "journal": null,
+      "arxivId": "2508.19334",
+      "doi": null,
+      "citationCount": 6,
+      "inspireUrl": "https://inspirehep.net/literature/2964300"
+    },
+    {
+      "id": "2964322",
+      "title": "Thermodynamics in a split Hilbert space: Quantum impurity at the edge of a one-dimensional superconductor",
+      "authors": ["Kattel, Pradip", "Zhakenov, Abay", "Andrei, Natan"],
+      "year": "2025",
+      "journal": "Phys.Rev.B 113, 195155 (2026)",
+      "arxivId": "2508.19330",
+      "doi": "10.1103/qw2d-k8wv",
+      "citationCount": 6,
+      "inspireUrl": "https://inspirehep.net/literature/2964322"
+    },
+    {
+      "id": "2947379",
+      "title": "Competing color superconductivity and color Kondo effect in quark matter",
+      "authors": ["Kattel, Pradip", "Zhakenov, Abay", "Andrei, Natan"],
+      "year": "2025",
+      "journal": "Phys.Rev.D 112, 094012 (2025)",
+      "arxivId": "2507.11617",
+      "doi": "10.1103/q6kz-2vl2",
+      "citationCount": 5,
+      "inspireUrl": "https://inspirehep.net/literature/2947379"
+    },
+    {
+      "id": "2855364",
+      "title": "Kondo overscreening in the presence of superconductivity",
+      "authors": ["Kattel, Pradip", "Zhakenov, Abay", "Andrei, Natan"],
+      "year": "2024",
+      "journal": "Phys.Rev.B 112, 085103 (2025)",
+      "arxivId": "2412.01924",
+      "doi": "10.1103/rg1x-bztv",
+      "citationCount": 7,
+      "inspireUrl": "https://inspirehep.net/literature/2855364"
+    },
+    {
+      "id": "2758693",
+      "title": "Dissipation driven phase transition in the non-Hermitian Kondo model",
+      "authors": ["Kattel, Pradip", "Zhakenov, Abay", "Pasnoori, Parameshwar R.", "Azaria, Patrick", "Andrei, Natan"],
+      "year": "2024",
+      "journal": "Phys.Rev.B 111, L201106 (2025)",
+      "arxivId": "2402.09510",
+      "doi": "10.1103/PhysRevB.111.L201106",
+      "citationCount": 20,
+      "inspireUrl": "https://inspirehep.net/literature/2758693"
+    },
+    {
+      "id": "1797888",
+      "title": "AGT basis in SCFT for c = 3/2 and Uglov polynomials",
+      "authors": ["Belavin, Vladimir", "Zhakenov, Abay"],
+      "year": "2020",
+      "journal": "Nucl.Phys.B 958, 115133 (2020)",
+      "arxivId": "2005.12454",
+      "doi": "10.1016/j.nuclphysb.2020.115133",
+      "citationCount": 1,
+      "inspireUrl": "https://inspirehep.net/literature/1797888"
+    }
+  ]
+}
