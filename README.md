@@ -63,13 +63,3 @@ domain.
 Deployment is `.github/workflows/deploy.yml` — builds and publishes `dist/`
 to GitHub Pages on every push to `main`, or on demand via
 `workflow_dispatch`.
-
-## Still needed (see REBUILD_SPEC.md §12)
-
-- **Hero paragraph and research overview prose** — drafted in
-  `src/content/bio.ts` (`heroSummary`, `researchOverview`). Written in Abay's
-  voice per the spec, but goes out under his name — review before shipping.
-- **Hosting choice** — user site vs. custom domain vs. project repo, see
-  above.
-- **"In preparation" publications** — not included; add a section to
-  `src/content/publications.ts` / the Publications component if wanted.
