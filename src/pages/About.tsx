@@ -21,11 +21,7 @@ const About = () => {
 
   return (
     <Layout>
-      <Seo
-        title="About"
-        description="Background — Kazakhstan, MIPT, the Landau Institute, Rutgers — plus soccer and judo."
-        path="/about"
-      />
+      <Seo path="/about" />
       <AboutHero />
       <Bio />
       <SportsSection />

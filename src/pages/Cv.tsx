@@ -2,12 +2,12 @@ import { FileDown } from "lucide-react";
 import { Layout } from "@/components/layout/Layout";
 import { Seo } from "@/components/layout/Seo";
 import { Button } from "@/components/ui/button";
-import { profile, links } from "@/content/site";
+import { profile, links, cvUpdated } from "@/content/site";
 
 const Cv = () => {
   return (
     <Layout>
-      <Seo title="CV" description={`Curriculum vitae for ${profile.name}.`} path="/cv" />
+      <Seo path="/cv" />
       <section className="py-20 bg-gradient-warm">
         <div className="container mx-auto px-4 lg:px-8">
           <div className="max-w-2xl mx-auto text-center space-y-6 animate-fade-in-up">
@@ -24,6 +24,9 @@ const Cv = () => {
                 Download CV (PDF)
               </a>
             </Button>
+            {cvUpdated && (
+              <p className="text-sm text-muted-foreground">Last updated {cvUpdated}.</p>
+            )}
           </div>
         </div>
       </section>

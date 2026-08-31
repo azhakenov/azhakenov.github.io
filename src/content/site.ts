@@ -1,6 +1,6 @@
 export const profile = {
   name: "Abay Zhakenov",
-  role: "PhD Candidate in Theoretical Physics",
+  role: "PhD Candidate in Theoretical Condensed Matter Physics",
   institution: "Rutgers University",
   department: "Department of Physics & Astronomy",
   expectedDefense: "May 2027",
@@ -8,6 +8,10 @@ export const profile = {
   location: "Piscataway, NJ",
   advisor: "Natan Andrei",
 };
+
+// Build-time stamp from public/cv.pdf's mtime (see vite.config.ts) so the
+// "last updated" line can never drift from the file it describes.
+export const cvUpdated = __CV_UPDATED__;
 
 export const scholarUrl: string | null = "https://scholar.google.com/citations?user=9oRfzvsAAAAJ&hl=en";
 

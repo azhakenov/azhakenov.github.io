@@ -1,4 +1,4 @@
-import { ArrowUp, Sparkles, BookOpen, Mic, FlaskConical, GraduationCap, Award } from "lucide-react";
+import { PencilRuler, ArrowUp, Sparkles, BookOpen, Mic, FlaskConical, GraduationCap, Award } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
@@ -6,6 +6,7 @@ const navItems = [
   { id: "top", icon: ArrowUp, label: "Back to Top" },
   { id: "recent-highlights", icon: Sparkles, label: "Selected Work" },
   { id: "publications", icon: BookOpen, label: "Publications" },
+  { id: "in-progress", icon: PencilRuler, label: "Work in Progress" },
   { id: "talks", icon: Mic, label: "Talks & Presentations" },
   { id: "research-experience", icon: FlaskConical, label: "Research Experience" },
   { id: "education", icon: GraduationCap, label: "Education" },

@@ -37,6 +37,11 @@ export function CoursesSection() {
                 <Badge variant="secondary">Teaching Assistant</Badge>
               </div>
 
+              <p className="text-sm text-muted-foreground mb-4">
+                Recitations, laboratories, and occasional lectures across eleven
+                undergraduate physics courses.
+              </p>
+
               <div className="space-y-4">
                 <div>
                   <p className="text-sm font-medium text-muted-foreground mb-2 flex items-center gap-2">

@@ -10,6 +10,13 @@ export interface Talk {
 
 export const talks: Talk[] = [
   {
+    title: "Dynamics and thermodynamics of quantum impurities at the edge of spin chains",
+    event: "APS Global Physics Summit",
+    location: "Denver, CO",
+    date: "March 2026",
+    type: "Contributed Talk",
+  },
+  {
     title: "Thermodynamics in a split Hilbert space: quantum impurity at the edge of 1d systems",
     event: "Rutgers Fall CMT Symposium 2025",
     location: "Rutgers University",
@@ -33,7 +40,7 @@ export const talks: Talk[] = [
   },
   {
     title: "Impurity Effects in the Spin-S Heisenberg–Babujian Chain",
-    event: "APS March Meeting",
+    event: "APS Global Physics Summit",
     location: "Anaheim, CA",
     date: "March 2025",
     type: "Contributed Talk",

@@ -15,12 +15,12 @@ export function ResearchHeader() {
       <div className="container mx-auto px-4 lg:px-8">
         <div className="max-w-4xl mx-auto">
           <div className="space-y-5 animate-fade-in-up">
-            <p className="text-primary font-medium tracking-wide uppercase text-sm">Research</p>
             <h1 className="font-display text-4xl font-bold tracking-tight sm:text-5xl">
-              {profile.name}
+              Research
             </h1>
             <p className="text-xl text-muted-foreground max-w-2xl leading-relaxed">
-              {profile.role}, {profile.institution} — expected {profile.expectedDefense}
+              {profile.name} — {profile.role}, {profile.institution}. Defending{" "}
+              {profile.expectedDefense}.
             </p>
 
             <div className="flex flex-wrap gap-6 pt-2 text-sm text-muted-foreground">

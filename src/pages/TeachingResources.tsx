@@ -10,11 +10,7 @@ import { SITE } from "@/config/site";
 const TeachingResources = () => {
   return (
     <Layout>
-      <Seo
-        title="Teaching Resources"
-        description="Reference material for Honors Physics III (PHY 273) and private physics tutoring — math toolkits, problem sheets, and homework sets."
-        path="/teaching/resources"
-      />
+      <Seo path="/teaching/resources" />
 
       <section className="py-16 bg-gradient-warm">
         <div className="container mx-auto px-4 lg:px-8">

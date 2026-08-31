@@ -7,11 +7,7 @@ import { SectionLinks } from "@/components/home/SectionLinks";
 const Index = () => {
   return (
     <Layout>
-      <Seo
-        title="Theoretical Physicist"
-        description="Abay Zhakenov — PhD candidate in theoretical condensed-matter physics at Rutgers University. Integrable systems, quantum impurities, and the thermodynamic Bethe ansatz."
-        path="/"
-      />
+      <Seo path="/" />
       <Hero />
       <SelectedWork />
       <SectionLinks />

@@ -49,7 +49,7 @@ export function TeachingHistorySection() {
             </div>
             <div className="grid gap-4 sm:grid-cols-2">
               {miptTeaching.map((item) => (
-                <HistoryCard key={item.title} item={item} />
+                <HistoryCard key={`${item.title}-${item.period}`} item={item} />
               ))}
             </div>
           </div>
@@ -58,7 +58,7 @@ export function TeachingHistorySection() {
             <h2 className="font-display text-2xl font-bold mb-6">Other Teaching Experience</h2>
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {otherTeaching.map((item) => (
-                <HistoryCard key={item.title} item={item} />
+                <HistoryCard key={`${item.title}-${item.period}`} item={item} />
               ))}
             </div>
           </div>
@@ -72,7 +72,7 @@ export function TeachingHistorySection() {
             </div>
             <div className="grid gap-4 sm:grid-cols-2">
               {olympiadExperience.map((item) => (
-                <HistoryCard key={item.title} item={item} />
+                <HistoryCard key={`${item.title}-${item.period}`} item={item} />
               ))}
             </div>
           </div>

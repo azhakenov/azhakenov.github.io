@@ -8,24 +8,28 @@ export interface ResearchArea {
 
 export const researchAreas: ResearchArea[] = [
   {
-    title: "Integrable Systems",
-    description: "Exactly solvable models using Bethe ansatz, R-matrix, and Yang-Baxter methods",
+    title: "Integrability & Exact Methods",
+    description: "Bethe ansatz, thermodynamic Bethe ansatz, and quantum transfer matrix techniques",
   },
   {
-    title: "Quantum Many-Body Physics",
-    description: "Strongly correlated systems, spin chains, and collective quantum phenomena",
+    title: "Quantum Impurity & Boundary Problems",
+    description: "Kondo screening, boundary bound modes, and impurity entropy in strongly correlated hosts",
   },
   {
-    title: "Thermodynamic Bethe Ansatz",
-    description: "Finite-temperature properties and thermodynamics of integrable models",
+    title: "One-Dimensional Correlated Systems",
+    description: "Spin chains, superconducting wires, and higher-rank su(n) models",
   },
   {
-    title: "Impurity Models",
-    description: "Kondo-type problems and quantum impurities in correlated systems",
+    title: "Boundary Conformal Field Theory",
+    description: "Fixed points and boundary states of critical one-dimensional systems",
   },
   {
-    title: "Generalized Hydrodynamics",
-    description: "Transport and non-equilibrium dynamics in integrable systems",
+    title: "Non-Hermitian & Monitored Dynamics",
+    description: "Dissipative and PT-symmetric impurities, and impurities under continuous measurement",
+  },
+  {
+    title: "Tensor-Network Methods",
+    description: "Matrix-product benchmarks and influence-matrix calculations of real-time dynamics",
   },
 ];
 

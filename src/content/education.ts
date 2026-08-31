@@ -13,7 +13,7 @@ export const education: Education[] = [
     degree: "Ph.D. in Physics",
     institution: "Rutgers University",
     location: "New Brunswick, NJ",
-    period: "2021 – Present",
+    period: "2021 – 2027 (expected)",
     advisor: "Natan Andrei",
     details: "Research in integrable systems, impurity physics, and quantum many-body theory",
   },

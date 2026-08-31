@@ -6,6 +6,7 @@ import { Overview } from "@/components/research/Overview";
 import { Areas } from "@/components/research/Areas";
 import { Highlights } from "@/components/research/Highlights";
 import { Publications } from "@/components/research/Publications";
+import { InProgress } from "@/components/research/InProgress";
 import { Talks } from "@/components/research/Talks";
 import { Experience } from "@/components/research/Experience";
 import { Education } from "@/components/research/Education";
@@ -15,11 +16,7 @@ import { QuickJumpNav } from "@/components/research/QuickJumpNav";
 const Research = () => {
   return (
     <Layout>
-      <Seo
-        title="Research"
-        description="Publications, talks, and research areas — integrable systems, quantum impurities, and the thermodynamic Bethe ansatz."
-        path="/research"
-      />
+      <Seo path="/research" />
       <QuickJumpNav />
       <ResearchHeader />
       <Metrics />
@@ -27,6 +24,7 @@ const Research = () => {
       <Areas />
       <Highlights />
       <Publications />
+      <InProgress />
       <Talks />
       <Experience />
       <Education />
